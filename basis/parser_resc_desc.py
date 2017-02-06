@@ -178,7 +178,7 @@ class ProgParser:
             if self.tokenType != CommaTokType:
                 break
             self.tokenType, self.token, self.lineNo = self.tokens.next()
-            return ASTNode(FuncCallListNodeType, terms)
+        return ASTNode(FuncCallListNodeType, terms)
 
 
 #
