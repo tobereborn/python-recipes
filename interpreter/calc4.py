@@ -4,7 +4,7 @@
 # Created by weizhenjin on 17-2-6
 
 # Token types
-INTEGER, PLUS, MINUS, EOF = 'INTEGER', 'PLUS', 'MINUS', 'EOF'
+INTEGER, MUL, DIV, EOF = 'INTEGER', 'MUL', 'DIV', 'EOF'
 
 
 class Token(object):
@@ -21,15 +21,17 @@ class Token(object):
         return self.__str__()
 
 
-class Interpreter(object):
+class Lexer(object):
+    """Lexical analyzer(also known as scanner or tokenizer
+
+       This Lexer is to parse token including integer ,multiplication
+       and division operators
+    """
+
     def __init__(self, text):
         self.text = text
         self.pos = 0
-        self.current_token = None
         self.current_char = self.text[self.pos]
-
-    def error(self):
-        raise Exception('Error parsing input')
 
     def advance(self):
         self.pos += 1
@@ -50,53 +52,61 @@ class Interpreter(object):
         return int(result)
 
     def get_next_token(self):
-        """Lexical analyzer(also known as scanner or tokenizer"""
-
         while self.current_char is not None:
             if self.current_char.isspace():
                 self.skip_whitespace()
             elif self.current_char.isdigit():
                 return Token(INTEGER, self.integer())
-            elif self.current_char == '+':
+            elif self.current_char == '*':
                 self.advance()
-                return Token(PLUS, '+')
-            elif self.current_char == '-':
+                return Token(MUL, '*')
+            elif self.current_char == '/':
                 self.advance()
-                return Token(MINUS, '-')
+                return Token(DIV, '/')
             else:
                 self.error()
 
         return Token(EOF, None)
 
+
+class Interpreter(object):
+    """ Arithmetic expression parser / interpreter.
+
+        expr   : factor ((MUL | DIV) factor)*
+        factor : INTEGER
+    """
+
+    def __init__(self, lexer):
+        self.lexer = lexer
+        self.current_token = None
+
+    def error(self):
+        raise Exception('Invalid syntax')
+
     def eat(self, token_type):
         if self.current_token.type == token_type:
-            self.current_token = self.get_next_token()
+            self.current_token = self.lexer.get_next_token()
         else:
             self.error()
 
+    def factor(self):
+        token = self.current_token
+        self.eat(INTEGER)
+        return token.value
+
     def expr(self):
-        """ expr -> INTEGER (PLUS|MINUS) INTEGER """
-        self.current_token = self.get_next_token()
+        self.current_token = self.lexer.get_next_token()
 
-        # expect left int
-        left = self.current_token
-        self.eat(INTEGER)
+        result = self.factor()
 
-        # expect mid +
-        op = self.current_token
-        if op.type == PLUS:
-            self.eat(PLUS)
-        else:
-            self.eat(MINUS)
+        while self.current_token.type in (MUL, DIV):
+            if self.current_token.type == MUL:
+                self.eat(MUL)
+                result *= self.factor()
+            elif self.current_token.type == DIV:
+                self.eat(DIV)
+                result /= self.factor()
 
-        # expect right int
-        right = self.current_token
-        self.eat(INTEGER)
-
-        if op.type == PLUS:
-            result = left.value + right.value
-        else:
-            result = left.value - right.value
         return result
 
 
@@ -110,7 +120,7 @@ def main():
         if not text:
             continue
 
-        interpreter = Interpreter(text)
+        interpreter = Interpreter(Lexer(text))
         result = interpreter.expr()
         print(result)
 

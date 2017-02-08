@@ -29,7 +29,7 @@ class Interpreter(object):
         self.current_char = self.text[self.pos]
 
     def error(self):
-        raise Exception('Error parsing input')
+        raise Exception('Invalid syntax')
 
     def advance(self):
         self.pos += 1
@@ -74,29 +74,25 @@ class Interpreter(object):
         else:
             self.error()
 
+    def term(self):
+        token = self.current_token
+        self.eat(INTEGER)
+        return token.value
+
     def expr(self):
-        """ expr -> INTEGER (PLUS|MINUS) INTEGER """
+        """ expr -> INTEGER ((PLUS|MINUS) INTEGER)* """
         self.current_token = self.get_next_token()
 
-        # expect left int
-        left = self.current_token
-        self.eat(INTEGER)
+        result = self.term()
 
-        # expect mid +
-        op = self.current_token
-        if op.type == PLUS:
-            self.eat(PLUS)
-        else:
-            self.eat(MINUS)
+        while self.current_token.type in (PLUS, MINUS):
+            if self.current_token.type == PLUS:
+                self.eat(PLUS)
+                result += self.term()
+            elif self.current_token.type == MINUS:
+                self.eat(MINUS)
+                result -= self.term()
 
-        # expect right int
-        right = self.current_token
-        self.eat(INTEGER)
-
-        if op.type == PLUS:
-            result = left.value + right.value
-        else:
-            result = left.value - right.value
         return result
 
 
