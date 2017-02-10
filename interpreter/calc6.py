@@ -4,7 +4,7 @@
 # Created by weizhenjin on 17-2-6
 
 # Token types
-INTEGER, MUL, DIV, EOF = 'INTEGER', 'MUL', 'DIV', 'EOF'
+INTEGER, PLUS, MINUS, MUL, DIV, LPAREN, RPAREN, EOF = 'INTEGER', 'PLUS', 'MINUS', 'MUL', 'DIV', 'LPAREN', 'RPAREN', 'EOF'
 
 
 class Token(object):
@@ -57,12 +57,24 @@ class Lexer(object):
                 self.skip_whitespace()
             elif self.current_char.isdigit():
                 return Token(INTEGER, self.integer())
+            elif self.current_char == '+':
+                self.advance()
+                return Token(PLUS, '+')
+            elif self.current_char == '-':
+                self.advance()
+                return Token(MINUS, '-')
             elif self.current_char == '*':
                 self.advance()
                 return Token(MUL, '*')
             elif self.current_char == '/':
                 self.advance()
                 return Token(DIV, '/')
+            elif self.current_char == '(':
+                self.advance()
+                return Token(LPAREN, '(')
+            elif self.current_char == ')':
+                self.advance()
+                return Token(RPAREN, ')')
             else:
                 self.error()
 
@@ -72,13 +84,14 @@ class Lexer(object):
 class Interpreter(object):
     """ Arithmetic expression parser / interpreter.
 
-        expr   : factor ((MUL | DIV) factor)*
-        factor : INTEGER
+        expr   : term ((PLUS|MINUS) term)*
+        term   : factor ((MUL | DIV) factor)*
+        factor : INTEGER | LPAREN expr RPAREN
     """
 
     def __init__(self, lexer):
         self.lexer = lexer
-        self.current_token = None
+        self.current_token = self.lexer.get_next_token()
 
     def error(self):
         raise Exception('Invalid syntax')
@@ -91,12 +104,18 @@ class Interpreter(object):
 
     def factor(self):
         token = self.current_token
-        self.eat(INTEGER)
-        return token.value
+        result = token.value
 
-    def expr(self):
-        self.current_token = self.lexer.get_next_token()
+        if token.type == LPAREN:
+            self.eat(LPAREN)
+            result = self.expr()
+            self.eat(RPAREN)
+        else:
+            self.eat(INTEGER)
 
+        return result
+
+    def term(self):
         result = self.factor()
 
         while self.current_token.type in (MUL, DIV):
@@ -106,6 +125,19 @@ class Interpreter(object):
             elif self.current_token.type == DIV:
                 self.eat(DIV)
                 result /= self.factor()
+
+        return result
+
+    def expr(self):
+        result = self.term()
+
+        while self.current_token.type in (PLUS, MINUS):
+            if self.current_token.type == PLUS:
+                self.eat(PLUS)
+                result += self.term()
+            elif self.current_token.type == MINUS:
+                self.eat(MINUS)
+                result -= self.term()
 
         return result
 
