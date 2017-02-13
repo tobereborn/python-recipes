@@ -1,0 +1,13 @@
+
+1. install anaconda:
+  sudo wget https://mirrors.tuna.tsinghua.edu.cn/anaconda/archive/Anaconda3-4.2.0-Linux-x86_64.sh
+  sudo bash Anaconda3-4.2.0-Linux-x86_64.sh
+
+  conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+  conda config --set show_channel_urls yes
+
+
+
+2. install zipline:
+  conda install -c quantopian zipline
+
