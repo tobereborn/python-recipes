@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # Created by weizhenjin on 17-2-14
 
-#http://codingpy.com/article/an-introduction-to-numpy/
+# http://codingpy.com/article/an-introduction-to-numpy/
 
 import numpy as np
 
@@ -53,6 +53,42 @@ def main():
     print(f < h)
     print(f > h)
     print(f.dot(h))
+    i = np.arange(10)
+    print('i: \n%s' % i)
+    print(i.sum())
+    print(i.min())
+    print(i.max())
+    print(i.cumsum())
+    j = np.arange(0, 100, 10)
+    print('j: \n%s' % j)
+    indices = [1, 5, -1]
+    k = j[indices]
+    print(k)
+
+    import matplotlib.pyplot as plt
+    l = np.linspace(0, 2 * np.pi, 50)
+    print('l: \n%s' % l)
+    m = np.sin(l)
+    plt.plot(l, m)
+    mask = m >= 0
+    plt.plot(l[mask], m[mask], 'bo')
+    mask = (m >= 0) & (l <= np.pi / 2)
+    plt.plot(l[mask], m[mask], 'go')
+    # plt.show()
+    n = np.arange(0, 100, 10)
+    o = n[:5]
+    p = n[n >= 50]
+    print(o)
+    print(p)
+    q = np.arange(0, 100, 10)
+    r = np.where(q < 50)
+    s = np.where(q >= 50)[0]
+    print(r)
+    print(s)
+    print(np.arange(10000).reshape(100, 100))
+    print(np.zeros((3, 4)))
+    print(np.ones((2, 3), dtype=np.int16))
+    print(np.empty((2, 3)))
 
 
 if __name__ == '__main__':
