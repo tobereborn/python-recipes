@@ -2,14 +2,19 @@
 # -*- coding: utf-8 -*-
 # Created by weizhenjin on 17-2-15
 
-import mysql.connector
+# import mysql.connector
+import MySQLdb
+import sys
+
+reload(sys)
 
 CONFIG = {
-    'user': 'root',
-    'password': 'mysql@1234',
     'host': 'localhost',
-    'database': 'test_py',
-    # 'raise_on_warnings': True,
+    'user': 'root',
+    'passwd': 'mysql@1234',
+    'db': 'test_py',
+    'port': 3306,
+    'charset': 'utf8'
 }
 
 
@@ -26,7 +31,9 @@ class Users(object):
             raise StopIteration
         else:
             self.id += 1
-            return self.id - 1, 'jack-{0}'.format(self.id - 1)
+            return self.id - 1, u'中文jack-{0}'.format(self.id - 1)
+            # return self.id - 1, u'中文jack-{0}'.format(self.id - 1).encode('utf-8')
+            # or return self.id - 1, u'中文jack-{0}'.format(self.id - 1).decode('utf-8')
 
 
 def test():
@@ -38,23 +45,23 @@ def test():
 def main():
     conn = None
     try:
-        conn = mysql.connector.connect(**CONFIG)
+        conn = MySQLdb.connect(**CONFIG)
         # print(conn.isolation_level)
         cursor = None
         try:
             cursor = conn.cursor()
             cursor.execute('create table if not exists user(id int primary key, name varchar(20))')
             cursor.execute('delete from user')
-            cursor.executemany('insert into user (id ,name) values (?,?)', Users(100))
+            cursor.executemany('insert into user (id ,name) values (%s,%s)', Users(100))
             print('insert counts: %s' % cursor.rowcount)
             conn.commit()
-        except mysql.connector.Error as e:
+        except MySQLdb.Error as e:
             conn.rollback()
             print('Error when executing sql and rollbacked, args: %s, message: %s' % (e.args, e.message))
         finally:
             if cursor:
                 cursor.close()
-    except mysql.connector.Error as e:
+    except MySQLdb.Error as e:
         print('Error when connecting to db, args: %s, message: %s' % (e.args, e.message))
     finally:
         if conn:
@@ -62,4 +69,4 @@ def main():
 
 
 if __name__ == '__main__':
-    test()
+    main()
