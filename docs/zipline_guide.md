@@ -35,3 +35,8 @@
     zipline run -f ../lib/python2.7/site-packages/zipline/examples/buyapple.py -b quandl --start 2000-1-1 --end 2014-1-1 -o buyapple_out.pickle
     
     source deactive drp01
+    
+
+#7. extend
+
+ http://www.prokopyshen.com/create-custom-zipline-data-bundle
