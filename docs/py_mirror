@@ -1,8 +1,0 @@
-1. pypi:
-sudo easy_install -i https://pypi.douban.com/simple/ pkg
-sudo pip install -i https://pypi.douban.com/simple/ pkg
-
-2. conda:
-conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
-conda config --set show_channel_urls yes
-
