@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Created by weizhenjin on 17-2-15
+
+# import mysql.connector
+import MySQLdb
+
 CONFIG = {
     'host': 'localhost',
     'user': 'root',
@@ -10,10 +14,7 @@ CONFIG = {
     'FAQ.md':'utf8'
 }
 
-# import mysql.connector
-import MySQLdb
-
-
+# Is is not working, only list or tuple is accepted
 def main():
     conn = None
     try:
@@ -22,17 +23,12 @@ def main():
         cursor = None
         try:
             cursor = conn.cursor()
-            cursor.execute('create table if not exists user(id int primary key, name varchar(20))')
-            cursor.execute('delete from user')
-            users = []
-            for i in xrange(1, 100):
-                users.append((i, u'中文jack-{0}'.format(i).encode('utf8')))
-            cursor.executemany('insert into user (id ,name) values (%s,%s)', users)
-            print('insert counts: %s' % cursor.rowcount)
-            conn.commit()
+            cursor.execute('select * from user where id>=%s and id <=%s', (0, 100))
+            rows = cursor.fetchall()
+            for row in rows:
+                print(row)
         except MySQLdb.Error as e:
-            conn.rollback()
-            print('Error when executing sql and rollbacked, args: %s, message: %s' % (e.args, e.message))
+            print('Error when executing query, args: %s, message: %s' % (e.args, e.message))
         finally:
             if cursor:
                 cursor.close()
