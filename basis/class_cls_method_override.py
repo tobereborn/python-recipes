@@ -11,13 +11,13 @@ class Base(object):
         print('Base.add(num)')
         self.size += num
 
-    def print(self):
+    def printd(self):
         print('size=%s' % self.size)
 
 
 class SubA(Base):
     def __init__(self, size):
-        super().__init__(size)
+        super(SubA, self).__init__(size)
 
     def add(self, num):
         print('SubA.add(num)')
@@ -26,12 +26,12 @@ class SubA(Base):
 
 def main():
     base = Base(1)
-    base.print()
+    base.printd()
     a = SubA(2)
     a.add(2)
-    a.print()
+    a.printd()
     base = a
-    base.print()
+    base.printd()
 
 
 if __name__ == '__main__':
