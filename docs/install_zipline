@@ -6,8 +6,17 @@
   conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
   conda config --set show_channel_urls yes
 
+2. sudo apt-get install -y gcc gfortran python-dev libatlas-base-dev  python-dev python3-dev libblas-dev liblapack-dev cython
+
+sudo apt-get install build-essential manpages-dev
+
+sudo apt-get install -y build-essential gfortran libatlas-base-dev libatlas3gf-base python-dev libjpeg-dev libxml2-dev libfreetype6-devlibpng-dev
 
 
-2. install zipline:
+3. sudo pip install Cython --install-option="--no-cython-compile"
+
+4. sudo pip install -i https://pypi.tuna.tsinghua.edu.cn/simple zipline
+
+3. install zipline:
   conda install -c quantopian zipline
 
