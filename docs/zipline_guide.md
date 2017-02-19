@@ -20,7 +20,7 @@
    Or, sudo conda install -c quantopian zipline, it may fail due to network issue
 
 #5. Ingest data
-   sudo weget  https://s3.amazonaws.com/quantopian-public-zipline-data/quandl
+   sudo weget https://s3.amazonaws.com/quantopian-public-zipline-data/quandl
    
    source active drp01
    
