@@ -11,7 +11,7 @@ CONFIG = {
     'passwd': 'mysql@1234',
     'db': 'test_py',
     'port': 3306,
-    'FAQ.md': 'utf8',
+    'charset': 'utf8',
 }
 
 
