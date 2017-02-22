@@ -3,9 +3,4 @@
 # Created by weizhenjin on 17-2-15
 
 
-def main():
-    pass
-
-
-if __name__ == '__main__':
-    main()
+from .cusor_2_dataframe import as_pandas

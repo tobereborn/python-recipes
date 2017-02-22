@@ -17,14 +17,19 @@ CONFIG = {
 
 # Is is not working, only list or tuple is accepted
 def main():
-    with pyhs2.connect(**CONFIG) as conn:
-        with conn.cursor() as cur:
-            print(cur.getDatabases())
-            cur.execute('select * from employee')
-            print(cur.getSchema())
-            rows = cur.fetchall()
-            for row in rows:
-                print(row[1].decode('utf-8'))
+    try:
+        with pyhs2.connect(**CONFIG) as conn:
+            try:
+                with conn.cursor() as cur:
+                    cur.execute('select * from employee limit 1')
+                    print(cur.getSchema())
+                    rows = cur.fetchall()
+                    for row in rows:
+                        print(row[1].decode('utf-8'))
+            except Exception as e:
+                print('Executing sql error %s' % e)
+    except Exception as e:
+        print('Connection error: %s' % e)
 
 
 if __name__ == '__main__':
