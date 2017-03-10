@@ -74,7 +74,7 @@ def main():
     plt.plot(l[mask], m[mask], 'bo')
     mask = (m >= 0) & (l <= np.pi / 2)
     plt.plot(l[mask], m[mask], 'go')
-    plt.show()
+    # plt.show()
     n = np.arange(0, 100, 10)
     o = n[:5]
     p = n[n >= 50]

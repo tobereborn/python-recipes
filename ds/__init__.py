@@ -1,4 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+#
 
-""" package for usage of data science utilities including numpy and pandas """
+
+def main():
+    pass
+
+
+if __name__ == '__main__':
+    main()
