@@ -23,8 +23,10 @@ def main():
         # print(conn.isolation_level)
         cursor = None
         try:
+            sql = """select * from user
+                where id>=%s and id <=%s;"""
             cursor = conn.cursor()
-            cursor.execute('select * from user where id>=%s and id <=%s', (0, 100))
+            cursor.execute(sql, [0, 100])
             rows = cursor.fetchall()
             for row in rows:
                 print(row)
