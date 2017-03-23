@@ -8,7 +8,7 @@ def log_calls(fn):
             the arguments and return value to logfile.log """
 
     def inner(*args, **kwargs):
-        out = apply(fn, args, kwargs)
+        out = fn(fn, args, kwargs)
         with open('logfile.log', 'a') as f:
             f.write('%s calls with args %s kwargs %s, returning %s\n' % (fn.__name__, args, kwargs, out))
         return out

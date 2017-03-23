@@ -16,7 +16,7 @@ CONFIG = {
 
 
 def users(size=100):
-    for i in xrange(1, size):
+    for i in range(1, size):
         yield (i, u'中文jack-{0}'.format(i).encode('utf8'))
 
 

@@ -20,7 +20,7 @@ def main():
     while status in (TOperationState.INITIALIZED_STATE, TOperationState.RUNNING_STATE):
         logs = cursor.fetch_logs()
         for message in logs:
-            print message
+            print(message)
 
         # If needed, an asynchronous query can be cancelled at any time with:
         # cursor.cancel()

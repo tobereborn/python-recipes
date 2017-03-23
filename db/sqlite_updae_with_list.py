@@ -16,7 +16,7 @@ def main():
             cursor.execute('create table if not exists user(id int primary key, name varchar(20))')
             cursor.execute('delete from user')
             users = []
-            for i in xrange(1, 100):
+            for i in range(1, 100):
                 users.append((i, 'jack-{0}'.format(i)))
             cursor.executemany('insert into user (id ,name) values (?,?)', users)
             print('insert counts: %s' % cursor.rowcount)

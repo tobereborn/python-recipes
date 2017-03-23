@@ -26,8 +26,9 @@ sayhi = b(sayhi)
 
 
 def main():
-    print greet('jack')
-    print sayhi('tom')
+    print(greet('jack'))
+    print(sayhi('tom'))
+
 
 if __name__ == '__main__':
     main()
