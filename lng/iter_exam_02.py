@@ -22,9 +22,9 @@ def make_producer(collection, excludes):
 
 def main():
     iter1 = make_producer(DATA, ('apple', 'orange', 'honeydew'))
-    print '%s' % iter1
+    print('%s' % iter1)
     for fruit in iter1:
-        print fruit
+        print(fruit)
 
 
 if __name__ == '__main__':

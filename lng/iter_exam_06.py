@@ -15,7 +15,7 @@ generator = (f(x) for x in mylist)
 
 def main():
     for x in generator:
-        print x
+        print(x)
 
 
 if __name__ == '__main__':

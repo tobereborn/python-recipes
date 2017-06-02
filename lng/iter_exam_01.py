@@ -10,15 +10,15 @@ def generateItems(seq):
 
 def main():
     anIter = generateItems([])
-    print 'dir(agIter):', dir(anIter)
+    print('dir(agIter):', dir(anIter))
     anIter = generateItems([111, 222, 333])
     for x in anIter:
-        print x
+        print(x)
     anIter = generateItems(['aaa', 'bbb', 'ccc'])
-    print anIter.next()
-    print anIter.next()
-    print anIter.next()
-    print anIter.next()
+    print(anIter.next())
+    print(anIter.next())
+    print(anIter.next())
+    print(anIter.next())
 
 
 if __name__ == '__main__':

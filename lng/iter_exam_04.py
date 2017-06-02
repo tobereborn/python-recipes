@@ -27,22 +27,22 @@ class IteratorExample:
 def main():
     a = IteratorExample('edcba')
     for x in a:
-        print x
-    print '­­­­­­­­­­'
+        print(x)
+    print('­­­­­­­­­­')
     a.refresh()
     for x in a:
-        print x
-    print '=' * 30
+        print(x)
+    print('=' * 30)
     a = IteratorExample('abcde')
     try:
-        print a.next()
-        print a.next()
-        print a.next()
-        print a.next()
-        print a.next()
-        print a.next()
-    except StopIteration, e:
-        print 'stopping', e
+        print(a.next())
+        print(a.next())
+        print(a.next())
+        print(a.next())
+        print(a.next())
+        print(a.next())
+    except StopIteration as e:
+        print('stopping', e)
 
 
 if __name__ == '__main__':

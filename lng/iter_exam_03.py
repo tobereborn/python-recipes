@@ -30,13 +30,13 @@ class Node:
             # return self.children
 
     def walk(self, level=0):
-        print '%sname: %s, value: %s' % (get_filter(level), self.get_name(), self.get_value())
+        print('%sname: %s, value: %s' % (get_filter(level), self.get_name(), self.get_value()))
         for child in self.iterchildren():
             child.walk(level + 1)
 
 
 def walk(node, level=0):
-    print '%sname: %s, value: %s' % (get_filter(level), node.get_name(), node.get_value())
+    print('%sname: %s, value: %s' % (get_filter(level), node.get_name(), node.get_value()))
     for child in node.iterchildren():
         walk(child, level + 1)
 
@@ -54,11 +54,11 @@ def main():
     a2 = Node('bill', '222', [a6, a7])
     a1 = Node('alice', '111', [a2, a3])
     # Use the walk method to walk the entire tree.
-    print 'Using the method:'
+    print('Using the method:')
     a1.walk()
-    print '=' * 30
+    print('=' * 30)
     # Use the walk function to walk the entire tree.
-    print 'Using the function:'
+    print('Using the function:')
     walk(a1)
 
 

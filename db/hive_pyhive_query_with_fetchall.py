@@ -4,7 +4,7 @@
 
 from pyhive import hive
 from TCLIService.ttypes import TOperationState
-import cusor_2_dataframe as c2d
+from db import cusor_2_dataframe as c2d
 
 CONFIG = {
     'host': 'localhost', 'port': 10000, 'username': 'weizhenjin', 'database': 'test', 'auth': 'NONE'

@@ -29,7 +29,7 @@ def main():
             except Exception as e:
                 print('Executing sql error %s' % e)
     except Exception as e:
-        print('Connection error: %s' % e)
+        raise e
 
 
 if __name__ == '__main__':

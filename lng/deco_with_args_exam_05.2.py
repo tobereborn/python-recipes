@@ -4,6 +4,10 @@
 from functools import wraps
 import logging
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(levelname)s:%(asctime)s:%(message)s'
+)
 
 
 def logged(level, name=None, message=None):
@@ -14,7 +18,7 @@ def logged(level, name=None, message=None):
 
         @wraps(func)
         def wrapper(*args, **kwargs):
-            log.info(level, logmsg)
+            log.log(level, logmsg)
             return func(*args, **kwargs)
 
         return wrapper
