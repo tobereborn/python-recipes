@@ -21,7 +21,9 @@ http://pypi.sdutlinux.org/
 http://pypi.douban.com/simple/
    
 #3.1. pypi:
-sudo pip install -i https://pypi.douban.com/simple pkg
+export http_proxy=http://proxy_url:proxy_port
+export https_proxy=http://proxy_url:proxy_port
+pip install -i https://pypi.douban.com/simple pkg
 
 or 
  
@@ -32,5 +34,12 @@ index-url = https://pypi.tuna.tsinghua.edu.cn/simple
 trusted-host=mirrors.aliyun.com
 
 #3.2. conda:
+
+vi ~/.condarc
+proxy_servers:
+  https: http://proxy.xxx.com:8080
+  http: http://proxy.xxx.com:8080
+
 conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free
-conda config --set show_channel_urls yes   
+conda config --set show_channel_urls yes
+conda config --set use_pip True
