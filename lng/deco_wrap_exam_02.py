@@ -25,8 +25,8 @@ g = decorator(g)
 
 
 def main():
-    print f(1)
-    print g(1)
+    print(f(1))
+    print(g(1))
 
 
 if __name__ == '__main__':

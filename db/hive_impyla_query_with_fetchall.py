@@ -16,10 +16,10 @@ conn = connect(host='vd0214.halxg.cloudera.com', port=10000, use_ldap=True, ldap
 from impala.dbapi import connect
 
 CONFIG = {
-    'host': 'localhost',
-    'user': 'weizhenjin',
-    'password': 'weizhenjin',
-    'database': 'test',
+    'host': ' 10.255.0.83',
+    'user': '?',
+    'password': '?',
+    'database': 'hduer08db',
     'port': 10000,
     'auth_mechanism': 'PLAIN',
 }
