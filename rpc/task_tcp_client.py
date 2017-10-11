@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from socket import *
-import time
 import struct
+from rpc import task_pb2
 
 HOST = 'localhost'
 PORT = 20000
@@ -13,14 +13,15 @@ BUF_SIZE = 1
 def send(socket, message_type, task_type, content):
     message_type = struct.pack('!H', message_type)
     task_type = struct.pack('!H', task_type)
-    content = content.encode('utf-8')
-    content_len = struct.pack('!I', len(content))
+    task = task_pb2.Task(content=content).SerializeToString()
+    task_len = struct.pack('!I', len(task))
     socket.sendall(message_type)
     socket.sendall(task_type)
-    socket.sendall(content_len)
-    socket.sendall(content)
+    socket.sendall(task_len)
+    socket.sendall(task)
     print('Send message_type:{}'.format(message_type))
-    print('Send task_type__byte:{}'.format(task_type))
+    print('Send task_type:{}'.format(task_type))
+    print('Send task:{}'.format(task))
 
 
 def recv(socket):
@@ -28,12 +29,14 @@ def recv(socket):
     message_type = struct.unpack('!H', message_type_buf)[0]
     task_type_buf = socket.recv(2)
     task_type = struct.unpack('!H', task_type_buf)[0]
-    content_len_bytes = socket.recv(4)
-    content_len = struct.unpack('!I', content_len_bytes)[0]
-    content_bytes = socket.recv(content_len)
+    task_len_buf = socket.recv(4)
+    task_len = struct.unpack('!I', task_len_buf)[0]
+    task_buf = socket.recv(task_len)
+    task = task_pb2.Task()
+    task.ParseFromString(task_buf)
     print('Recv message_type:{}'.format(message_type))
     print('Recv task_type:{}'.format(task_type))
-    print('Recv content_bytes:{}'.format(content_bytes.decode('utf-8')))
+    print('Recv task content:{}'.format(task.content))
 
 
 def recvall(sock, count):
